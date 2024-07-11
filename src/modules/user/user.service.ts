@@ -19,7 +19,6 @@ export class UserService {
     try {
       const authInfo = this.commonUtil.getAuthInfo();
       const address = authInfo.address;
-
       const user = await this.userRepo.getUserByAddress(address);
       return ResponseDto.response(ErrorMap.SUCCESSFUL, user);
     } catch (error) {

@@ -3,7 +3,7 @@ export const ErrorMap = {
     Code: 'SUCCESSFUL',
     Message: 'Successfully!',
   },
-  UNAUTHRORIZED: {
+  UN_AUTHORIZED: {
     Code: 'E401',
     Message: 'Unauthorized',
   },

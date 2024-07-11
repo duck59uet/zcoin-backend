@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { SharedModule } from '../../shared/shared.module';
-import { CustomConfigService } from '../../shared/services/custom-config.service';
+import { CustomConfigService } from '../../shared/services';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({

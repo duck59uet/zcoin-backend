@@ -61,7 +61,7 @@ export class CommonUtil {
 
   getAuthInfo(): UserInfoDto {
     const currentUser = AuthService.getAuthUser();
-    if (!currentUser) throw new CustomError(ErrorMap.UNAUTHRORIZED);
+    if (!currentUser) throw new CustomError(ErrorMap.UN_AUTHORIZED);
     return plainToInstance(UserInfoDto, currentUser);
   }
 }

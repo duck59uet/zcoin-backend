@@ -8,11 +8,9 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { JwtStrategy } from './modules/auth/jwt.strategy';
-import { CustomConfigService } from './shared/services/custom-config.service';
+import { CustomConfigService } from './shared/services';
 import { OrderModule } from './modules/order/order.module';
 import { SystemConfigModule } from './modules/system_config/system_config.module';
-import { UploadController } from './modules/upload/upload.controller';
-import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -49,9 +47,8 @@ import { UploadModule } from './modules/upload/upload.module';
     UserModule,
     OrderModule,
     SystemConfigModule,
-    UploadModule,
   ],
   providers: [JwtStrategy],
-  controllers: [UploadController],
+  controllers: [],
 })
 export class AppModule {}

@@ -13,8 +13,4 @@ export class Web3LoginDTO {
   @ApiProperty({ required: true })
   @IsString()
   signature: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  publicKey: string;
 }

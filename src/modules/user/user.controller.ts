@@ -1,12 +1,11 @@
-import { Body, Controller, Logger, Param } from '@nestjs/common';
+import { Body, Controller, Logger } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   CONTROLLER_CONSTANTS,
   URL_CONSTANTS,
 } from '../../common/constants/api.constant';
-import { CommonAuthGet, CommonAuthPost, CommonGet } from '../../decorators/common.decorator';
-import { ResponseDto } from '../../common/dtos/response.dto';
-import { GetUserPathParamDto } from './dto/request/get-user.req';
+import { CommonAuthGet, CommonAuthPost } from '../../decorators/common.decorator';
+import { ResponseDto } from '../../common/dtos';
 import { UserService } from './user.service';
 import { EditUserDto } from './dto/request/edit-user.req';
 

@@ -9,13 +9,8 @@ export enum OrderType {
   SELL = 'Sell',
 }
 
-export enum CollectionType {
-  DRAFT = 1,
-  PUBLISH = 2,
-}
-
-export enum ChartType {
-  DAY = 'day',
-  HOUR = 'hour',
-  MINUTE = 'minute'
+export enum OrderStatus {
+  PENDING = 'Pending',
+  COMPLETE = 'Complete',
+  REJECT = 'Reject',
 }

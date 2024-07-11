@@ -29,7 +29,7 @@ void (async function bootstrap() {
 
   // setup swagger
   const config = new DocumentBuilder()
-    .setTitle('Pumpfun API')
+    .setTitle('zcoin API')
     .setVersion('v1')
     .addServer('/')
     .addServer(configService.get<string>('SWAGGER_PATH'))
@@ -39,7 +39,7 @@ void (async function bootstrap() {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   app.use(swaggerStats.getMiddleware({ swaggerSpec: document }));
-  SwaggerModule.setup('documentation', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
 })();
