@@ -1,20 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsString } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 
 export class GetOrderHistoryPathParamsDto {
-  @ApiProperty({
-    description: 'startTime',
-    type: 'string',
-    format: 'date-time',
-  })
-  @IsDate()
-  startTime?: Date;
+  @ApiProperty()
+  @IsOptional()
+  @IsNumber()
+  startTime?: number;
 
-  @ApiProperty({
-    description: 'endTime',
-    type: 'string',
-    format: 'date-time',
-  })
-  @IsDate()
-  endTime?: Date;
+  @ApiProperty()
+  @IsOptional()
+  @IsNumber()
+  endTime?: number;
 }
