@@ -39,7 +39,7 @@ void (async function bootstrap() {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   app.use(swaggerStats.getMiddleware({ swaggerSpec: document }));
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('documentation', app, document);
 
   await app.listen(3000);
 })();
