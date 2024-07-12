@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { CustomError } from '../../common/custom-error';
 import { ErrorMap } from '../../common/error.map';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
 
 @Injectable()
 export class UserRepository {
@@ -55,6 +55,8 @@ export class UserRepository {
 
     user.wallet = addr;
     user.nonce = nonce;
+    user.role = UserRole.USER;
+    user.vip = 0;
     return await this.repo.save(user);
   }
 

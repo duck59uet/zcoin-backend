@@ -3,10 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 
 import { RoleType } from '../../constants';
 import { Web3LoginDTO } from './dto/web3-login.dto';
-import { isValidUserSignature, standardizeAddress } from '../../decorators/wallet.decorators';
+import { isValidUserSignature } from '../../decorators/wallet.decorators';
 import { UserRepository } from '../user/user.repository';
 import { ContextProvider } from '../../providers/contex.provider';
-
+import { Buffer } from 'buffer';
 @Injectable()
 export class AuthService {
   constructor(
@@ -17,11 +17,11 @@ export class AuthService {
   async userGetNonce(addr: string): Promise<number> {
     const nonce = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER) + 1;
 
-    const formatAddr = standardizeAddress(addr);
+    // const formatAddr = standardizeAddress(addr);
 
-    let user = await this.userRepo.getUserByAddress(formatAddr);
+    let user = await this.userRepo.getUserByAddress(addr);
     if (user === null) {
-      user = await this.userRepo.initUser(formatAddr, nonce);
+      user = await this.userRepo.initUser(addr, nonce);
     }
 
     // update user's nonce
@@ -30,11 +30,11 @@ export class AuthService {
   }
 
   async userLogIn(loginDTO: Web3LoginDTO): Promise<string> {
-    let { addr, message, signature, publicKey } = loginDTO;
+    let { addr, message, signature } = loginDTO;
 
-    addr = standardizeAddress(addr);
+    // addr = standardizeAddress(addr);
 
-    if (!isValidUserSignature(addr, message, signature, publicKey)) {
+    if (!isValidUserSignature(addr, message, signature)) {
       throw new UnauthorizedException('Invalid Signature');
     }
 
@@ -43,12 +43,11 @@ export class AuthService {
       throw new BadRequestException('User not found');
     }
 
-    const accessToken = await this.jwtService.signAsync({
+    return await this.jwtService.signAsync({
       id: user.id,
-      role: RoleType.USER,
+      role: user.role,
       address: addr
     });
-    return accessToken;
   }
 
   /**
