@@ -21,7 +21,8 @@ export class AuthService {
 
     let user = await this.userRepo.getUserByAddress(addr);
     if (user === null) {
-      user = await this.userRepo.initUser(addr, nonce);
+      // user = await this.userRepo.initUser(addr, nonce);
+      throw new BadRequestException('User not found');
     }
 
     // update user's nonce
