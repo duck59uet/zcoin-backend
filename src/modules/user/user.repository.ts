@@ -60,6 +60,20 @@ export class UserRepository {
     return await this.repo.save(user);
   }
 
+  async createUser(addr: string, userName: string, userRole: UserRole): Promise<User> {
+    let user = await this.getUserByAddress(addr.toString());
+    const nonce = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER) + 1;
+    if (user !== null) return user;
+
+    user = new User();
+
+    user.wallet = addr;
+    user.nonce = nonce;
+    user.role = userRole
+    user.vip = 0;
+    return await this.repo.save(user);
+  }
+
   async updateUserNonce(user: User, nonce: number) {
     user.nonce = nonce;
     return await this.repo.save(user);
@@ -75,6 +89,15 @@ export class UserRepository {
     user.avatar = avatar;
     user.username = userName;
     user.bio = bio;
+    return await this.repo.save(user);
+  }
+
+  async updateUserRole(address: string, role: UserRole): Promise<User> {
+    let user = await this.getUserByAddress(address);
+    if(!user) {
+      throw new CustomError(ErrorMap.USER_NOT_FOUND);
+    }
+    user.role = role;
     return await this.repo.save(user);
   }
 }

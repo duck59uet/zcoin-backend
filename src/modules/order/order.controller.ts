@@ -9,9 +9,8 @@ import { CommonAuthGet, CommonAuthPost } from '../../decorators/common.decorator
 import { ResponseDto } from '../../common/dtos';
 import { GetOrderHistoryPathParamsDto } from './dto/request/get-order-by-user.request';
 import { CreateOrderDto } from './dto/request/create-order.dto';
-import { Order } from './entities/order.entity';
-import { EditUserDto } from '../user/dto/request/edit-user.req';
 import { UpdateOrderDto } from './dto/request/admin-update-order.dto';
+import { GetOrdersByAdminDto } from './dto/request/get-orders-by-admin.request';
 
 @Controller(CONTROLLER_CONSTANTS.ORDER)
 @ApiTags(CONTROLLER_CONSTANTS.ORDER)
@@ -19,6 +18,21 @@ export class OrderController {
   public readonly logger = new Logger(OrderController.name);
 
   constructor(private orderService: OrderService) {}
+  @CommonAuthGet({
+    url: URL_CONSTANTS.ORDER_HISTORY,
+    summary: 'Get user order history of campaign',
+    apiOkResponseOptions: {
+      status: 200,
+      type: ResponseDto,
+      description: 'User order history',
+      schema: {},
+    },
+  })
+  async getOrderHistory(@Param() param: GetOrderHistoryPathParamsDto) {
+    this.logger.log('========== Get user order history ==========');
+    return this.orderService.getUserOrderHistoryByUserId(param);
+  }
+
   @CommonAuthGet({
     url: URL_CONSTANTS.USER_ORDER_HISTORY,
     summary: 'Get user order history of campaign',
@@ -29,9 +43,9 @@ export class OrderController {
       schema: {},
     },
   })
-  async getUserOrderHistory(@Param() param: GetOrderHistoryPathParamsDto) {
+  async getUserOrderHistory(@Param() param: GetOrdersByAdminDto) {
     this.logger.log('========== Get user order history ==========');
-    return this.orderService.getUserOrderHistoryByUserId(param);
+    return this.orderService.getUserOrderHistoryByUserAddress(param);
   }
 
 

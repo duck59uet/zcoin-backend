@@ -10,6 +10,8 @@ import { Order } from './entities/order.entity';
 import { OrderStatus } from '../../common/constants/app.constant';
 import { UpdateOrderDto } from './dto/request/admin-update-order.dto';
 import { UserRole } from '../user/entities/user.entity';
+import { GetOrdersByAdminDto } from './dto/request/get-orders-by-admin.request';
+import { UserRepository } from '../user/user.repository';
 
 @Injectable()
 export class OrderService {
@@ -18,6 +20,7 @@ export class OrderService {
 
   constructor(
     private orderRepo: OrderRepository,
+    private userRepo: UserRepository
   ) {
     this.logger.log('============== Constructor Order Service ==============');
   }
@@ -30,6 +33,26 @@ export class OrderService {
     try {
       const authInfo = this.commonUtil.getAuthInfo();
       const user_id = authInfo.id;
+      const whereClause = { user_id: user_id };
+      if (startTime && endTime) {
+        whereClause['createTime'] = Between(startTime, endTime);
+      }
+      const data = await this.orderRepo.repo.find({
+        where: whereClause,
+        order: { createTime: 'DESC' }
+      });
+      return ResponseDto.response(ErrorMap.SUCCESSFUL, data);
+    } catch (error) {
+      return ResponseDto.responseError(OrderService.name, error);
+    }
+  }
+  async getUserOrderHistoryByUserAddress(
+    param: GetOrdersByAdminDto
+  ): Promise<ResponseDto<any>> {
+    const { userAddress, startTime, endTime } = param;
+    try {
+      const user = await this.userRepo.getUserByAddress(userAddress);
+      const user_id = user.id;
       const whereClause = { user_id: user_id };
       if (startTime && endTime) {
         whereClause['createTime'] = Between(startTime, endTime);
@@ -72,7 +95,6 @@ export class OrderService {
   async updateOrder(updateOrderDto: UpdateOrderDto): Promise<ResponseDto<any>> {
     try {
       const authInfo = this.commonUtil.getAuthInfo();
-      let userAdd = authInfo.address;
       console.log(authInfo);
       if (authInfo.role !== UserRole.ADMIN) {
         console.log(authInfo.role);
