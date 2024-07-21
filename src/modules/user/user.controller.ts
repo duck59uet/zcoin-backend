@@ -49,12 +49,12 @@ export class UserController {
   }
 
   @CommonAuthPost({
-    url: '',
-    summary: 'Create user info',
+    url: URL_CONSTANTS.CREATE_USER,
+    summary: 'Create user',
     apiOkResponseOptions: {
       status: 200,
       type: ResponseDto,
-      description: 'Edit user detail',
+      description: 'create user',
       schema: {},
     },
   })
@@ -64,7 +64,7 @@ export class UserController {
   }
 
   @CommonAuthPost({
-    url: '',
+    url: URL_CONSTANTS.UPDATE_USER_ROLE,
     summary: 'Update user role',
     apiOkResponseOptions: {
       status: 200,

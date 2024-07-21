@@ -9,6 +9,8 @@ export const CONTROLLER_CONSTANTS = {
 };
 export const URL_CONSTANTS = {
   CONNECT_WALLET: 'connect_wallet',
+  CREATE_USER: 'create',
+  UPDATE_USER_ROLE: 'update-role',
   CREATE_COLLECTION: 'create-collection',
   GET_COLLECTION_ID: '/:id',
   AUTH: 'auth',
