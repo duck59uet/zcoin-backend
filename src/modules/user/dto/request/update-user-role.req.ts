@@ -4,9 +4,9 @@ import { UserRole } from '../../entities/user.entity';
 export class UpdateUserRoleDto {
     @ApiProperty({
         description: 'User Role',
-        type: UserRole,
+        type: String,
     })
-    userRole: UserRole;
+    userRole: string;
 
     @ApiProperty({
         description: 'User Address',
